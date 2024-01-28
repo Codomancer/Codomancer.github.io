@@ -5066,5 +5066,8 @@ body {
     height: 1px !important;
   }
 }
+pre {
+  tab-size: 2;
+}
 
 /*# sourceMappingURL=main.css.map */
