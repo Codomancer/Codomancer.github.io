@@ -4,4 +4,10 @@ var store = [{
         "tags": [],
         "url": "/SudsProIntegration",
         "teaser": "/assets/images/SudsProCppUi/ThumbnailSudsProCppInterface.jpg"
+      },{
+        "title": "Create the UserWidget class for SUDS Pro dialogue",
+        "excerpt":"In the last post, we prepared a C++ interface UCodoDialogueWidgetInterface to be used for connecting a SUDS Pro dialogue with a UserWidget. This post dives into how to implement UserWidget that makes use of UCodoDialogueWidgetInterface. Part of the dialogue widget will be a scroll box that contains buttons with all...","categories": ["jekyll","update"],
+        "tags": [],
+        "url": "/SudsProUserWidget",
+        "teaser": "/assets/images/SudsProCppUi/ThumbnailSudsProCppUserWidget.jpg"
       }]

@@ -1,4 +1,183 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://codomancer.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://codomancer.com/" rel="alternate" type="text/html" /><updated>2024-04-20T14:55:35+02:00</updated><id>https://codomancer.com/feed.xml</id><title type="html">Codomancer</title><subtitle>Game Dev</subtitle><entry><title type="html">Create the UserWidget class for SUDS Pro dialogue</title><link href="https://codomancer.com/SudsProUserWidget" rel="alternate" type="text/html" title="Create the UserWidget class for SUDS Pro dialogue" /><published>2024-02-03T00:00:00+01:00</published><updated>2024-02-03T00:00:00+01:00</updated><id>https://codomancer.com/SUDS-Pro-C++-UserWidget</id><content type="html" xml:base="https://codomancer.com/SudsProUserWidget"><![CDATA[<p>In the last post, we prepared a C++ interface <code class="language-plaintext highlighter-rouge">UCodoDialogueWidgetInterface</code> to be used for connecting a <a href="https://unrealengine.com/marketplace/en-US/product/suds-pro-dialogue-system">SUDS Pro</a> dialogue with a UserWidget. This post dives into how to implement UserWidget that makes use of <code class="language-plaintext highlighter-rouge">UCodoDialogueWidgetInterface</code>.</p>
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Create the UserWidget class for SUDS Pro dialogue - Codomancer</title>
+<meta name="description" content="In the last post, we prepared a C++ interface UCodoDialogueWidgetInterface to be used for connecting a SUDS Pro dialogue with a UserWidget. This post dives into how to implement UserWidget that makes use of UCodoDialogueWidgetInterface.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Codomancer">
+<meta property="og:title" content="Create the UserWidget class for SUDS Pro dialogue">
+<meta property="og:url" content="https://codomancer.com/SudsProUserWidget">
+
+
+  <meta property="og:description" content="In the last post, we prepared a C++ interface UCodoDialogueWidgetInterface to be used for connecting a SUDS Pro dialogue with a UserWidget. This post dives into how to implement UserWidget that makes use of UCodoDialogueWidgetInterface.">
+
+
+
+  <meta property="og:image" content="https://codomancer.com/assets/images/SudsProCppUi/ThumbnailSudsProCppUserWidget.jpg">
+
+
+
+
+
+  <meta property="article:published_time" content="2024-02-03T00:00:00+01:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://codomancer.com/SudsProUserWidget">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Codomancer",
+      "url": "https://codomancer.com/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Codomancer Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="/assets/fontawesome-free-5.15.4-web/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="/assets/fontawesome-free-5.15.4-web/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+	<link rel="icon" type="image/svg" href="/assets/images/CodomancerFavicon.svg">
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/CodomancerLogo.svg" alt=" "></a>
+        
+        <a class="site-title" href="/">
+           
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href=""> </a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+  
+
+
+
+
+
+
+
+<div class="page__hero"
+  style=" background-image: url('');"
+>
+  
+    <img src="/assets/images/SudsProCppUi/ThumbnailSudsProCppUserWidget.jpg" alt="Create the UserWidget class for SUDS Pro dialogue" class="page__hero-image">
+  
+  
+</div>
+
+
+
+
+
+
+
+<div id="main" role="main">
+  <!--
+-->
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Create the UserWidget class for SUDS Pro dialogue">
+    <meta itemprop="description" content="In the last post, we prepared a C++ interface UCodoDialogueWidgetInterface to be used for connecting a SUDS Pro dialogue with a UserWidget. This post dives into how to implement UserWidget that makes use of UCodoDialogueWidgetInterface.">
+    <meta itemprop="datePublished" content="2024-02-03T00:00:00+01:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://codomancer.com/SudsProUserWidget" class="u-url" itemprop="url">Create the UserWidget class for SUDS Pro dialogue
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+        <p>In the last post, we prepared a C++ interface <code class="language-plaintext highlighter-rouge">UCodoDialogueWidgetInterface</code> to be used for connecting a <a href="https://unrealengine.com/marketplace/en-US/product/suds-pro-dialogue-system">SUDS Pro</a> dialogue with a UserWidget. This post dives into how to implement UserWidget that makes use of <code class="language-plaintext highlighter-rouge">UCodoDialogueWidgetInterface</code>.</p>
 
 <p>Part of the dialogue widget will be a scroll box that contains buttons with all the answer possibilities. Because Unreal does not come with a button that has a text we define our own widget class that basically only consists of a rich text element and a button:</p>
 
@@ -359,193 +538,87 @@
 	<span class="n">SpeakerLineTextBlock</span><span class="o">-&gt;</span><span class="n">SetVisibility</span><span class="p">(</span><span class="n">ESlateVisibility</span><span class="o">::</span><span class="n">Hidden</span><span class="p">);</span>
 	<span class="n">ContinuePromptParentSizeBox</span><span class="o">-&gt;</span><span class="n">SetVisibility</span><span class="p">(</span><span class="n">ESlateVisibility</span><span class="o">::</span><span class="n">Hidden</span><span class="p">);</span>
 	<span class="n">AnswerOptionsScrollBox</span><span class="o">-&gt;</span><span class="n">SetVisibility</span><span class="p">(</span><span class="n">ESlateVisibility</span><span class="o">::</span><span class="n">Hidden</span><span class="p">);</span>
-<span class="p">}</span></code></pre></figure>]]></content><author><name></name></author><category term="jekyll" /><category term="update" /><summary type="html"><![CDATA[In the last post, we prepared a C++ interface UCodoDialogueWidgetInterface to be used for connecting a SUDS Pro dialogue with a UserWidget. This post dives into how to implement UserWidget that makes use of UCodoDialogueWidgetInterface.]]></summary></entry><entry><title type="html">Integrating SUDS Pro using C++</title><link href="https://codomancer.com/SudsProIntegration" rel="alternate" type="text/html" title="Integrating SUDS Pro using C++" /><published>2024-01-14T00:00:00+01:00</published><updated>2024-01-14T00:00:00+01:00</updated><id>https://codomancer.com/SUDS-Pro-C++-UI</id><content type="html" xml:base="https://codomancer.com/SudsProIntegration"><![CDATA[<p>I have recently discovered the <a href="https://unrealengine.com/marketplace/en-US/product/suds-pro-dialogue-system">SUDS Pro dialogue system </a> and was amazed by how many of my concerns regarding game dialogue it resolves. Not only that, SUDS Pro also takes care of a lot of related tasks that I did not even think of yet, such as triggering camera shake from dialogues. All in all, one can say that I am very happy with the purchase.</p>
-
-<p>In this article series, I am documenting my way of adapting the dialogue system. It does not aim at developing basic understanding for SUDS Pro. There is <a href="https://olddoorways.com/sudspro/docs/">an excellent documentation page</a> as well as <a href="https://github.com/sinbad/SUDSProExample">a great example project</a> that will help you with that.</p>
-
-<p>This article will be about the boilerplate code that is necessary to allow for a C++ based user interface for SUDS Pro.</p>
-
-<h2 id="custom-integration">Custom integration</h2>
-<p>By default, SUDS Pro assumes that you keep the dialogue UI in Blueprint. The reason is that default way of connecting your UserWidget to the dialogue is by <a href="https://olddoorways.com/sudspro/docs/tutorial/ui/#configuring-the-ui">implementing the Blueprint interface <code class="language-plaintext highlighter-rouge">BP_SudsProDialogueWidgetInterface</code></a>, an act only possible in Blueprint. You cannot implement a Blueprint interface in C++.</p>
-
-<p>Probably, most people will be just fine with that. However, I like to keep all the logic of my UIs in C++ for better maintainability and diff-ability.</p>
-
-<p>Luckily, it is possible <a href="https://olddoorways.com/sudspro/docs/tutorial/ui/#non-widget-uis">to implement a custom way of communicating with your user interface</a>. In short, it is necessary to offer a C++ based dialogue widget interface and implement a child class to <code class="language-plaintext highlighter-rouge">USudsProUiLink</code> that makes use of that C++ interface.</p>
-
-<p>Let’s start with the latter.</p>
-
-<h2 id="c-based-dialogue-widget-interface">C++ based Dialogue Widget Interface</h2>
-<p>The interface itself is straightforward since there is nothing to do except declaring the interface methods. However, the Unreal interface system has some peculiarities. Leaving the interface methods unimplemented and declaring them <code class="language-plaintext highlighter-rouge">PURE_VIRTUAL</code> will lead to an error when the corresponding method is called of a class implementing this interface.</p>
-
-<p>An alternative would be to mark the methods <code class="language-plaintext highlighter-rouge">BlueprintNativeEvent</code>s. However, this would allow implementing them in Blueprint. For Blueprint usage we already have <code class="language-plaintext highlighter-rouge">BP_SudsProDialogueWidgetInterface</code>.</p>
-
-<p>The solution is to include an empty definition for each method.</p>
-
-<p>CodoDialogueWidgetInterface.h:</p>
-
-<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="cp">#pragma once
-</span>
-<span class="cp">#include</span> <span class="cpf">"CoreMinimal.h"</span><span class="cp">
-#include</span> <span class="cpf">"SUDSDialogue.h"</span><span class="cp">
-#include</span> <span class="cpf">"UObject/Interface.h"</span><span class="cp">
-#include</span> <span class="cpf">"CodoDialogueWidgetInterface.generated.h"</span><span class="cp">
-</span>
-<span class="c1">// Auto-generated class - this class does not need to be modified.</span>
-<span class="c1">// Markup signalizes: For use in C++ only. This is not strictly necessary. But you can use the</span>
-<span class="c1">// BP_SudsProDialogueWidgetInterface instead if you want to work with BP based UIs.</span>
-<span class="n">UINTERFACE</span><span class="p">(</span><span class="n">MinimalAPI</span><span class="p">,</span> <span class="n">NotBlueprintable</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="p">(</span><span class="n">CannotImplementInterfaceInBlueprint</span><span class="p">))</span>
-<span class="k">class</span> <span class="nc">UCodoDialogueWidgetInterface</span> <span class="o">:</span> <span class="k">public</span> <span class="n">UInterface</span>
-<span class="p">{</span>
-	<span class="n">GENERATED_BODY</span><span class="p">()</span>
-<span class="p">};</span>
-
-<span class="cm">/**
- * C++ based equivalent of the Blueprint based BP_SudsProDialogueWidgetInterface as included in
- * SUDS Pro. This allows for UserWidget with C++ base class.
- */</span>
-<span class="k">class</span> <span class="nc">CODOUI_API</span> <span class="n">ICodoDialogueWidgetInterface</span>
-<span class="p">{</span>
-	<span class="n">GENERATED_BODY</span><span class="p">()</span>
-
-<span class="nl">public:</span>
-	<span class="c1">// These methods are not declared pure virtual because there will be an error when the</span>
-	<span class="c1">// corresponding method is called of a class implementing this interface.</span>
-	<span class="c1">// The next best thing that does not cause problems with the way Unreal interfaces work is to</span>
-	<span class="c1">// have an empty definition. This is the reason for the empty definitions {} of these methods.</span>
-	<span class="cm">/**
-	 * The method that is called at the beginning of a dialogue.
-	 * The widget should be setup and added to the viewport.
-	 * @param Dialogue The dialogue being started.
-	 * @param PlayerController The owner of the created widget
-	 * @param bShouldTakeOverInput Indicates if input shall be switched to UI only
-	 */</span>
-	<span class="n">UFUNCTION</span><span class="p">()</span>
-	<span class="k">virtual</span> <span class="kt">void</span> <span class="n">InitDialogueWidget</span><span class="p">(</span><span class="n">USUDSDialogue</span><span class="o">*</span> <span class="n">Dialogue</span><span class="p">,</span>
-	                                <span class="n">APlayerController</span><span class="o">*</span> <span class="n">PlayerController</span><span class="p">,</span>
-	                                <span class="kt">bool</span> <span class="n">bShouldTakeOverInput</span><span class="p">)</span>
-	<span class="p">{</span>
-	<span class="p">}</span>
-
-	<span class="cm">/**
-	 * Called at the end of the dialogue. Remove the widget from the screen.
-	 * @param Dialogue The dialogue being finished.
-	 * @param PlayerController The owner of the created widget
-	 * @param bShouldRestoreInput Indicates if the input must be switched back to the regular controls
-	 */</span>
-	<span class="n">UFUNCTION</span><span class="p">()</span>
-	<span class="k">virtual</span> <span class="kt">void</span> <span class="nf">ShutdownDialogueWidget</span><span class="p">(</span><span class="n">USUDSDialogue</span><span class="o">*</span> <span class="n">Dialogue</span><span class="p">,</span>
-	                                    <span class="n">APlayerController</span><span class="o">*</span> <span class="n">PlayerController</span><span class="p">,</span>
-	                                    <span class="kt">bool</span> <span class="n">bShouldRestoreInput</span><span class="p">)</span>
-	<span class="p">{</span>
-	<span class="p">}</span>
-
-	<span class="cm">/**
-	 * Called upon availability of a new speaker line. Get new Text and Speaker Dislpay Name.
-	 * Check for choices or if dialogue is simple continue.
-	 * @param Dialogue Dialogue that has a new speaker line available.
-	 */</span>
-	<span class="n">UFUNCTION</span><span class="p">()</span>
-	<span class="k">virtual</span> <span class="kt">void</span> <span class="nf">ShowSpeakerLineInWidget</span><span class="p">(</span><span class="n">USUDSDialogue</span><span class="o">*</span> <span class="n">Dialogue</span><span class="p">)</span>
-	<span class="p">{</span>
-	<span class="p">}</span>
-<span class="p">};</span></code></pre></figure>
-
-<h2 id="c-based-ui-widget-link">C++ based UI Widget Link</h2>
-<p>There is nothing wrong with the <code class="language-plaintext highlighter-rouge">BP_SudsProUiWidgetLink</code>. A simple re-implementation of it with the references to the dialogue widget interface changed to <code class="language-plaintext highlighter-rouge">UCodoDialogueWidgetInterface</code> is enough.</p>
-
-<p>CodoDialogueUiLink.h:</p>
-
-<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="cp">#pragma once
-</span>
-<span class="cp">#include</span> <span class="cpf">"CoreMinimal.h"</span><span class="cp">
-#include</span> <span class="cpf">"SudsProUiLink.h"</span><span class="cp">
-#include</span> <span class="cpf">"CodoDialogueUiLink.generated.h"</span><span class="cp">
-</span>
-<span class="k">class</span> <span class="nc">UUserWidget</span><span class="p">;</span>
-
-<span class="cm">/**
- * Custom implementation of the SudsProUiLink class, requiring the CodoDialogueWidgetInterface to be
- * used on the dialogue widget. This allows for C++ based UserWidgets.
- */</span>
-<span class="n">UCLASS</span><span class="p">()</span>
-<span class="k">class</span> <span class="nc">CODOUI_API</span> <span class="n">UCodoDialogueUiLink</span> <span class="o">:</span> <span class="k">public</span> <span class="n">USudsProUiLink</span>
-<span class="p">{</span>
-	<span class="n">GENERATED_BODY</span><span class="p">()</span>
-
-<span class="nl">protected:</span>
-	<span class="n">UPROPERTY</span><span class="p">()</span>
-	<span class="n">UUserWidget</span><span class="o">*</span> <span class="n">WidgetInstance</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">;</span>
-
-	<span class="kt">bool</span> <span class="n">bHasChangedInputMappings</span><span class="p">;</span>
-
-<span class="nl">public:</span>
-	<span class="c1">// Override all methods of USudsProUiLink to call the according methods of CodoDialogueWidgetInterface</span>
-
-	<span class="k">virtual</span> <span class="kt">void</span> <span class="n">DialogueStarting_Implementation</span><span class="p">(</span><span class="n">USUDSDialogue</span><span class="o">*</span> <span class="n">Dialogue</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">bShouldTakeOverInput</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
-	<span class="k">virtual</span> <span class="kt">void</span> <span class="n">DialogueFinished_Implementation</span><span class="p">(</span><span class="n">USUDSDialogue</span><span class="o">*</span> <span class="n">Dialogue</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">bShouldRestoreInput</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
-	<span class="k">virtual</span> <span class="kt">void</span> <span class="n">ShowSpeakerLine_Implementation</span><span class="p">(</span><span class="n">USUDSDialogue</span><span class="o">*</span> <span class="n">Dialogue</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
-<span class="p">};</span></code></pre></figure>
-
-<p>CodoDialogueUiLink.cpp:</p>
-
-<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="cp">#include</span> <span class="cpf">"CodoDialogueUiLink.h"</span><span class="cp">
-</span>
-<span class="cp">#include</span> <span class="cpf">"CodoDialogueWidgetInterface.h"</span><span class="cp">
-#include</span> <span class="cpf">"SudsProLibrary.h"</span><span class="cp">
-#include</span> <span class="cpf">"Blueprint/UserWidget.h"</span><span class="cp">
-#include</span> <span class="cpf">"Kismet/GameplayStatics.h"</span><span class="cp">
-</span>
-<span class="kt">void</span> <span class="n">UCodoDialogueUiLink</span><span class="o">::</span><span class="n">DialogueStarting_Implementation</span><span class="p">(</span><span class="n">USUDSDialogue</span><span class="o">*</span> <span class="n">Dialogue</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">bShouldTakeOverInput</span><span class="p">)</span>
-<span class="p">{</span>
-	<span class="n">Super</span><span class="o">::</span><span class="n">DialogueStarting_Implementation</span><span class="p">(</span><span class="n">Dialogue</span><span class="p">,</span> <span class="n">bShouldTakeOverInput</span><span class="p">);</span>
-
-	<span class="k">const</span> <span class="n">TSubclassOf</span><span class="o">&lt;</span><span class="n">UUserWidget</span><span class="o">&gt;</span> <span class="n">UserWidgetClass</span> <span class="o">=</span> <span class="n">USudsProLibrary</span><span class="o">::</span><span class="n">GetDialogueWidgetClass</span><span class="p">();</span>
-	<span class="n">APlayerController</span><span class="o">*</span> <span class="n">PlayerController</span> <span class="o">=</span> <span class="n">UGameplayStatics</span><span class="o">::</span><span class="n">GetPlayerController</span><span class="p">(</span><span class="n">GetWorld</span><span class="p">(),</span> <span class="mi">0</span><span class="p">);</span>
-
-	<span class="k">if</span> <span class="p">(</span><span class="n">ensureMsgf</span><span class="p">(</span><span class="n">IsValid</span><span class="p">(</span><span class="n">UserWidgetClass</span><span class="p">),</span> <span class="n">TEXT</span><span class="p">(</span><span class="s">"The Dialogue Widget class set in the Suds Pro project settings is invalid."</span><span class="p">))</span>
-		<span class="o">&amp;&amp;</span> <span class="n">ensureMsgf</span><span class="p">(</span><span class="n">PlayerController</span><span class="p">,</span> <span class="n">TEXT</span><span class="p">(</span><span class="s">"A dialogue is started without an available player controller."</span><span class="p">)))</span>
-	<span class="p">{</span>
-		<span class="n">WidgetInstance</span> <span class="o">=</span> <span class="n">CreateWidget</span><span class="p">(</span><span class="n">PlayerController</span><span class="p">,</span> <span class="n">UserWidgetClass</span><span class="p">,</span> <span class="n">FName</span><span class="p">(</span><span class="s">"DialogueWidget"</span><span class="p">));</span>
-		<span class="k">if</span> <span class="p">(</span><span class="n">ensureMsgf</span><span class="p">(</span><span class="n">WidgetInstance</span><span class="o">-&gt;</span><span class="n">Implements</span><span class="o">&lt;</span><span class="n">UCodoDialogueWidgetInterface</span><span class="o">&gt;</span><span class="p">(),</span>
-		               <span class="n">TEXT</span><span class="p">(</span><span class="s">"The supplied dialogue widget class does not implement the ICodoDialogueWidgetInterface, which is required for compatibility with CodoDialogueUiLink."</span><span class="p">)))</span>
-		<span class="p">{</span>
-			<span class="n">ICodoDialogueWidgetInterface</span><span class="o">*</span> <span class="n">WidgetAsInterface</span> <span class="o">=</span> <span class="n">Cast</span><span class="o">&lt;</span><span class="n">ICodoDialogueWidgetInterface</span><span class="o">&gt;</span><span class="p">(</span><span class="n">WidgetInstance</span><span class="p">);</span>
-			<span class="k">if</span> <span class="p">(</span><span class="n">ensure</span><span class="p">(</span><span class="n">WidgetAsInterface</span><span class="p">))</span>
-			<span class="p">{</span>
-				<span class="n">WidgetAsInterface</span><span class="o">-&gt;</span><span class="n">InitDialogueWidget</span><span class="p">(</span><span class="n">Dialogue</span><span class="p">,</span> <span class="n">PlayerController</span><span class="p">,</span> <span class="n">bShouldTakeOverInput</span><span class="p">);</span>
-			<span class="p">}</span>
-		<span class="p">}</span>
-	<span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kt">void</span> <span class="n">UCodoDialogueUiLink</span><span class="o">::</span><span class="n">DialogueFinished_Implementation</span><span class="p">(</span><span class="n">USUDSDialogue</span><span class="o">*</span> <span class="n">Dialogue</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">bShouldRestoreInput</span><span class="p">)</span>
-<span class="p">{</span>
-	<span class="n">Super</span><span class="o">::</span><span class="n">DialogueFinished_Implementation</span><span class="p">(</span><span class="n">Dialogue</span><span class="p">,</span> <span class="n">bShouldRestoreInput</span><span class="p">);</span>
-
-	<span class="n">APlayerController</span><span class="o">*</span> <span class="n">PlayerController</span> <span class="o">=</span> <span class="n">UGameplayStatics</span><span class="o">::</span><span class="n">GetPlayerController</span><span class="p">(</span><span class="n">GetWorld</span><span class="p">(),</span> <span class="mi">0</span><span class="p">);</span>
-	<span class="k">if</span> <span class="p">(</span><span class="n">ensureMsgf</span><span class="p">(</span><span class="n">IsValid</span><span class="p">(</span><span class="n">WidgetInstance</span><span class="p">),</span> <span class="n">TEXT</span><span class="p">(</span><span class="s">"Dialog finished at a point of time where there is no dialogue widget."</span><span class="p">))</span>
-		<span class="o">&amp;&amp;</span> <span class="n">ensureMsgf</span><span class="p">(</span><span class="n">PlayerController</span><span class="p">,</span> <span class="n">TEXT</span><span class="p">(</span><span class="s">"A dialogue has finished without an available player controller"</span><span class="p">)))</span>
-	<span class="p">{</span>
-		<span class="n">ICodoDialogueWidgetInterface</span><span class="o">*</span> <span class="n">WidgetAsInterface</span> <span class="o">=</span> <span class="n">Cast</span><span class="o">&lt;</span><span class="n">ICodoDialogueWidgetInterface</span><span class="o">&gt;</span><span class="p">(</span><span class="n">WidgetInstance</span><span class="p">);</span>
-		<span class="n">WidgetAsInterface</span><span class="o">-&gt;</span><span class="n">ShutdownDialogueWidget</span><span class="p">(</span><span class="n">Dialogue</span><span class="p">,</span> <span class="n">PlayerController</span><span class="p">,</span> <span class="n">bShouldRestoreInput</span><span class="p">);</span>
-		<span class="n">WidgetInstance</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">;</span>
-	<span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kt">void</span> <span class="n">UCodoDialogueUiLink</span><span class="o">::</span><span class="n">ShowSpeakerLine_Implementation</span><span class="p">(</span><span class="n">USUDSDialogue</span><span class="o">*</span> <span class="n">Dialogue</span><span class="p">)</span>
-<span class="p">{</span>
-	<span class="n">Super</span><span class="o">::</span><span class="n">ShowSpeakerLine_Implementation</span><span class="p">(</span><span class="n">Dialogue</span><span class="p">);</span>
-
-	<span class="k">if</span> <span class="p">(</span><span class="n">ensureMsgf</span><span class="p">(</span><span class="n">IsValid</span><span class="p">(</span><span class="n">WidgetInstance</span><span class="p">),</span> <span class="n">TEXT</span><span class="p">(</span><span class="s">"Speaker line shown at a point of time where there is no dialogue widget."</span><span class="p">)))</span>
-	<span class="p">{</span>
-		<span class="n">ICodoDialogueWidgetInterface</span><span class="o">*</span> <span class="n">WidgetAsInterface</span> <span class="o">=</span> <span class="n">Cast</span><span class="o">&lt;</span><span class="n">ICodoDialogueWidgetInterface</span><span class="o">&gt;</span><span class="p">(</span><span class="n">WidgetInstance</span><span class="p">);</span>
-		<span class="n">WidgetAsInterface</span><span class="o">-&gt;</span><span class="n">ShowSpeakerLineInWidget</span><span class="p">(</span><span class="n">Dialogue</span><span class="p">);</span>
-	<span class="p">}</span>
 <span class="p">}</span></code></pre></figure>
 
-<h2 id="tying-everything-together">Tying everything together</h2>
-<p>We need to make our classes known to SUDS Pro. This can be done by settings the <code class="language-plaintext highlighter-rouge">CodoDialogueUiLink</code> class as the default UI class in the SUDS Pro part of the project settings.</p>
 
-<p><img src="assets/images/SudsProCppUi/ProjectSettingsUiLink.png" alt="SUDS Pro UI widget link project settings entry" /></p>
+        
+      </section>
 
-<p>Lastly, the only thing missing is an actual widget for the dialogue. The next article will be about how to use the newly created interface in a UserWidget (once it is ready).</p>]]></content><author><name></name></author><category term="jekyll" /><category term="update" /><summary type="html"><![CDATA[I have recently discovered the SUDS Pro dialogue system and was amazed by how many of my concerns regarding game dialogue it resolves. Not only that, SUDS Pro also takes care of a lot of related tasks that I did not even think of yet, such as triggering camera shake from dialogues. All in all, one can say that I am very happy with the purchase.]]></summary></entry></feed>
+<!--      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2024-02-03T00:00:00+01:00">February 3, 2024</time></p>
+
+
+      </footer> -->
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/SudsProIntegration" class="pagination--pager" title="Integrating SUDS Pro using C++
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2024 Codomancer. Logo based on <a href="https://somepx.itch.io/pixel-font-lookout" rel="nofollow">Lookout by somepx</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.
+<br>
+<a href="/license">Licensing Information</a></div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
